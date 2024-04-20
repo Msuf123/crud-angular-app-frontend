@@ -31,6 +31,12 @@ export class FetchDataService {
   sendData(data:any){
     return this.http.post<Friends[]>('http://localhost:3003/friends/add',data,{headers:{'Content-Type':"application/json"},responseType:'json'})
   }
+  deleteData(url:string){
+    return this.http.delete<Friends[]>(url)
+  }
+  updateData(data:any){
+    return this.http.put<Friends[]>('http://localhost:3003/friends',data)
+  }
 }
 export interface Friends{
   name:string,place:string
