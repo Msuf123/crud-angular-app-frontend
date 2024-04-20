@@ -7,6 +7,7 @@ import { URL } from './services/url-of-server/url-backend.service';
 import { AddFriendsComponent } from './add-friends/add-friends.component';
 import { DeleteFriendsComponent } from './delete-friends/delete-friends.component';
 import { UpdateFriendComponent } from './update-friend/update-friend.component';
+import { FriendsService } from './services/current-list-of-friends/friends.service';
 
 @Component({
   selector: 'app-root',
@@ -18,9 +19,10 @@ import { UpdateFriendComponent } from './update-friend/update-friend.component';
 })
 export class AppComponent {
   currentFriends:Friends[]=[]
-  constructor(private request:FetchDataService,@Inject(URL) private url:string){
+  constructor(private request:FetchDataService,@Inject(URL) private url:string,private store:FriendsService){
+    this.store.friendList.subscribe((data)=>{console.log(data);this.currentFriends=data})
     this.request.checkServer().subscribe((response)=>console.log(response))
-    this.request.getData().subscribe((response)=>this.currentFriends=response)
+    this.request.getData().subscribe((response)=>store.friendList.next(response))
   }
 
   fetchDataFromServer(){
