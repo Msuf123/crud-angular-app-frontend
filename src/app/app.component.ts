@@ -1,27 +1,30 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { FetchDataService, Friends } from './services/fetch-data.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { LoggerService } from './services/logger/logger.service';
 import { CommonModule } from '@angular/common';
+import { URL } from './services/url-of-server/url-backend.service';
+import { AddFriendsComponent } from './add-friends/add-friends.component';
+import { DeleteFriendsComponent } from './delete-friends/delete-friends.component';
+import { UpdateFriendComponent } from './update-friend/update-friend.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,HttpClientModule,CommonModule],
+  imports: [RouterOutlet,HttpClientModule,CommonModule,AddFriendsComponent,DeleteFriendsComponent,UpdateFriendComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
-  ,providers:[FetchDataService]
+  ,providers:[FetchDataService,{provide:URL,useValue:'http://localhost:3000'}]
 })
 export class AppComponent {
-  currentHeros:Friends[]=[]
-  constructor(private request:FetchDataService,private logger:LoggerService){
-
+  currentFriends:Friends[]=[]
+  constructor(private request:FetchDataService,@Inject(URL) private url:string){
+    this.request.checkServer().subscribe((response)=>console.log(response))
+    this.request.getData().subscribe((response)=>this.currentFriends=response)
   }
 
   fetchDataFromServer(){
-    this.logger.log()
-   this.request.getData().subscribe((response)=>this.currentHeros=response)
+   
   }
   title = 'client';
 }

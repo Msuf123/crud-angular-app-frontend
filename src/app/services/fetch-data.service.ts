@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 
 @Injectable({
@@ -21,9 +21,15 @@ export class FetchDataService {
  }
 
   constructor(private http:HttpClient) { }
+  checkServer(){
+    return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'})
+  }
   getData(){
     return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body'}).pipe(retry(3),catchError(this.handelError))
 
+  }
+  sendData(data:any){
+    return this.http.post<Friends[]>('http://localhost:3003/friends/add',data,{headers:{'Content-Type':"application/json"},responseType:'json'})
   }
 }
 export interface Friends{

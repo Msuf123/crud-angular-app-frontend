@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LoggerService } from './logger.service';
+import { UrlBackendService } from './url-backend.service';
 
-describe('LoggerService', () => {
-  let service: LoggerService;
+describe('UrlBackendService', () => {
+  let service: UrlBackendService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(LoggerService);
+    service = TestBed.inject(UrlBackendService);
   });
 
   it('should be created', () => {

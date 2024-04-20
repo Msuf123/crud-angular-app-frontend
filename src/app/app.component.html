@@ -1,6 +1,19 @@
-<h1>Fetch friends list form server</h1>
-<button (click)="fetchDataFromServer()">Click to get data</button>
-<div *ngFor="let friends of currentHeros">
- <p>{{friends.name}}</p>
- <p>{{friends.place}}</p>
+<h1 class="heading">Friends Diary</h1>
+<div>
+  <h3>Current friends:-</h3>
+  <div *ngFor="let friends of currentFriends" class="friendsDiv">
+    <p>Name:{{friends.name}}</p>
+    <p> Place:{{friends.place}}</p>
+   </div>
 </div>
+<div>
+    <app-add-friends></app-add-friends>
+</div>
+<div>
+    <app-delete-friends></app-delete-friends>
+</div>
+<div>
+    <app-update-friend></app-update-friend>
+</div>
+
+
