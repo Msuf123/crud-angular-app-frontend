@@ -1,5 +1,6 @@
-<form>
-    <input placeholder="Enter name">
-    <input placeholder="Enter the new place">
+<h4>Update Friends Place</h4>
+<form (ngSubmit)="submitData()" [formGroup]="form">
+    <input placeholder="Enter name" formControlName="name">
+    <input placeholder="Enter the new place" formControlName="place">
     <button>Update</button>
 </form>

@@ -1,5 +1,6 @@
-<form [formGroup]="friend" >
-    <input formControlName="name">
-    <input formControlName="place">
-    <button (click)="submitData()">Add</button>
+<h4>Add friend</h4>
+<form [formGroup]="friend" (ngSubmit)="submitData()">
+    <input formControlName="name" placeholder="Enter name">
+    <input formControlName="place" placeholder="Enter place">
+    <button>Add</button>
 </form>

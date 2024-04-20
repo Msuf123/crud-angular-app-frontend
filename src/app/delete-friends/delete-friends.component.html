@@ -1,4 +1,5 @@
-<form>
-    <input placeholder="Enter name to delete">
+<h4>Delete friend</h4>
+<form (ngSubmit)="submitData()" [formGroup]="form">
+    <input formControlName="name" placeholder="Enter name to delete">
     <button>Delete</button>
 </form>
