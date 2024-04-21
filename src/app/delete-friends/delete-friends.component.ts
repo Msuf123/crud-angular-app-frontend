@@ -16,11 +16,10 @@ export class DeleteFriendsComponent {
   form=this.formBuilder.group({
     name:['']
   })
+  urlOfDeleteRequest?:string
   submitData(){
-    this.url='http://localhost:3003/friends'
-    console.log(this.url)
-    this.url=`${this.url}?name=${this.form.value.name}`
-    console.log(this.url)
-    this.request.deleteData(this.url).subscribe((response)=>this.store.friendList.next(response))
+    this.urlOfDeleteRequest=`${this.url}?name=${this.form.value.name}`
+    console.log(this.urlOfDeleteRequest)
+    this.request.deleteData(this.urlOfDeleteRequest).subscribe((response)=>this.store.friendList.next(response))
   }
 }
