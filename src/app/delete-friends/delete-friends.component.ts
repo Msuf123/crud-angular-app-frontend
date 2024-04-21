@@ -18,8 +18,8 @@ export class DeleteFriendsComponent {
   })
   urlOfDeleteRequest?:string
   submitData(){
-    this.urlOfDeleteRequest=`${this.url}?name=${this.form.value.name}`
-    console.log(this.urlOfDeleteRequest)
-    this.request.deleteData(this.urlOfDeleteRequest).subscribe((response)=>this.store.friendList.next(response))
+    this.urlOfDeleteRequest=`${this.form.value.name}`
+   // console.log(this.urlOfDeleteRequest)
+    this.request.deleteData(this.url,this.urlOfDeleteRequest).subscribe((response)=>this.store.friendList.next(response))
   }
 }
