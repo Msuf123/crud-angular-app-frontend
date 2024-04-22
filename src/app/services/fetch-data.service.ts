@@ -1,5 +1,5 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { Inject, Injectable, inject } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 
 @Injectable({
@@ -19,8 +19,8 @@ export class FetchDataService {
   }
   return  throwError(()=>new Error('Somthing wnet wrong'))
  }
-
-  constructor(private http:HttpClient) { }
+ private http=inject(HttpClient)
+  constructor() { }
   checkServer(){
     return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'})
   }

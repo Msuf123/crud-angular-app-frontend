@@ -1,6 +1,7 @@
 import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
+import { LoggingMoreService } from './logging-more/logging-more.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,5 +13,5 @@ export class InterseptorService implements HttpInterceptor {
   }
   constructor() { }
 }
-export const CustormInterceptor:Provider={provide:HTTP_INTERCEPTORS,useClass:InterseptorService,multi:true
-}
+export const CustormInterceptor:Provider[]=[{provide:HTTP_INTERCEPTORS,useClass:InterseptorService,multi:true
+},{provide:HTTP_INTERCEPTORS,useClass:LoggingMoreService,multi:true}]
