@@ -13,10 +13,10 @@ import { CustormInterceptor } from './services/interseptor/interseptor.service';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet,CommonModule,AddFriendsComponent,DeleteFriendsComponent,UpdateFriendComponent,HttpClientModule],
+  imports: [RouterOutlet,CommonModule,HttpClientModule,AddFriendsComponent,DeleteFriendsComponent,UpdateFriendComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
-  ,providers:[{provide:URL,useValue:'http://localhost:3000'}]
+  ,providers:[FriendsService,HttpClient,FetchDataService,{provide:URL,useValue:'http://localhost:3000'}]
 })
 export class AppComponent {
   currentFriends:Friends[]=[]

@@ -2,9 +2,7 @@ import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular
 import { Inject, Injectable, inject } from '@angular/core';
 import { catchError, retry, throwError } from 'rxjs';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 
 export class FetchDataService {
 
