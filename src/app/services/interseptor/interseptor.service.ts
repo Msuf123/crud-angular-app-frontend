@@ -1,4 +1,4 @@
-import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpEvent, HttpHandler, HttpHeaders, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable, Provider } from '@angular/core';
 import { Observable } from 'rxjs';
 import { LoggingMoreService } from './logging-more/logging-more.service';
@@ -8,8 +8,11 @@ import { LoggingMoreService } from './logging-more/logging-more.service';
 })
 export class InterseptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('hi')
-    return next.handle(req)
+    const  newreq=req.clone({
+      headers:new HttpHeaders({Authorization:'new rokwn'})
+    })
+
+    return next.handle(newreq)
   }
   constructor() { }
 }

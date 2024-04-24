@@ -9,7 +9,7 @@ export class LoggingMoreService implements HttpInterceptor {
 
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log('i am second one')
+    
     return next.handle(req)
   }
 }

@@ -23,10 +23,7 @@ export class FetchDataService {
     return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'})
   }
   getData(){
-    let headersOption=new HttpHeaders({Authorization:'my-token'})
-   headersOption= headersOption.delete('Authorization')
-    console.log(headersOption.get('Authorization'))
-    return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json',headers:headersOption}).pipe(retry(3),catchError(this.handelError))
+    return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json'}).pipe(retry(3),catchError(this.handelError))
 
   }
   sendData(data:any){
