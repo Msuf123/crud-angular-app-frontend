@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
-import { FetchDataService } from '../services/fetch-data.service';
-import { FriendsService } from '../services/current-list-of-friends/friends.service';
+import { FetchDataService } from '../../services/fetch-data.service';
+import { FriendsService } from '../../services/current-list-of-friends/friends.service';
+
 
 @Component({
   selector: 'app-update-friend',
