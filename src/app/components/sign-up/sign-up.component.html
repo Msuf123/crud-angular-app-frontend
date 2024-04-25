@@ -1,10 +1,14 @@
 <div class="outerDiv">
     <h1>Sign-up</h1>
     <form [formGroup]="signUpForm" (ngSubmit)="formSubmitted()">
-        <span *ngIf="emailError.required">Email Id is required</span>
-        <span *ngIf="emailError.email">Please Enter a correct email</span>
-        <input placeholder="Enter Username" formControlName="userId" >
-        <input placeholder="Enter password" formControlName="password">
+        <input id="email" placeholder="Enter Username" formControlName="userId" >
+        <label for="email" *ngIf="emailError.required">Email Id is required</label>
+        <label *ngIf="emailError.email" for="email">Please Enter a correct email</label>
+        <!-- <label>Email Avalibale</label>
+        <label>Loading</label>
+        <label>Already useed</label> -->
+        <input id="password" placeholder="Enter password" formControlName="password">
+        <label><span>Atleat 8 characters</span><br><span>One Special Charater(#,&#64;,!,etc.)</span></label>
         <button>Sign-up</button>
     </form>
 </div>

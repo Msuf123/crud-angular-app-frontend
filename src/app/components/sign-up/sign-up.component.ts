@@ -18,8 +18,9 @@ export class SignUpComponent {
  })
  constructor(){
   this.signUpForm.valueChanges.subscribe(()=>{
+    console.log(this.signUpForm.get('userId')?.hasError('required'))
     this.emailError=this.signUpForm.get('userId')?.hasError('required')?{email:false,required:true}:{email:false,required:false}
-    this.emailError=this.signUpForm.get('userId')?.hasError('email')?{email:true,required:false}:{email:false,required:false}
+    this.emailError=this.signUpForm.get('userId')?.hasError('email')?{email:true,required:false}:this.emailError
   })
  }
  
