@@ -1,16 +1,24 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, inject } from '@angular/core';
 import { flush } from '@angular/core/testing';
-import { catchError, retry, throwError } from 'rxjs';
+import { catchError, elementAt, retry, throwError } from 'rxjs';
 
 @Injectable({providedIn:'root'})
 
 export class FetchDataService {
  private http=inject(HttpClient)
   constructor() { }
-  log=true
+  errorHandler(errorObject:HttpErrorResponse){
+     if(errorObject.status===0){
+      console.log(errorObject.message)
+     }
+     else{
+      console.log(errorObject.error)
+     }
+     return 'Something went wrong'
+  }
   checkServer(){
-    return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'})
+    return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
   getData(){
     return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json'})

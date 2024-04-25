@@ -10,7 +10,7 @@ export class LoggingMoreService implements HttpInterceptor {
   constructor() { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const  newreq=req.clone({
-      headers:new HttpHeaders({Authorization:'jj'})
+      headers:new HttpHeaders({Authorization:'jjj'})
     }) 
     return next.handle(newreq)
   }
