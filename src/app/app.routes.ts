@@ -5,10 +5,12 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 import { HomePageComponent } from './home-page/home-page.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { authGuardGuard } from './auth-guard/auth-guard.guard';
+import { SignUpComponent } from './components/sign-up/sign-up.component';
 const titlew:ResolveFn<string>=()=>Promise.resolve('new-toitle')
 export const routes: Routes = [
     {path:'',component:HomePageComponent,canActivate:[authGuardGuard]},
     {path:'login',component:LoginComponent},
+    {path:'sign-up',component:SignUpComponent},
     {path:'register',component:RegisterUserComponent},
     {path:'**',component:PageNotFoundComponent}
 ];
