@@ -1,29 +1,19 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, inject } from '@angular/core';
+import { flush } from '@angular/core/testing';
 import { catchError, retry, throwError } from 'rxjs';
 
-@Injectable()
+@Injectable({providedIn:'root'})
 
 export class FetchDataService {
-
-  private handelError(error:HttpErrorResponse){
-  
-  if(error.status===0){
-  
-    console.log('Cleint side eror ',error.error)
-  }
-  else{
-    console.log('Server side error',error.error)
-  }
-  return  throwError(()=>new Error('Somthing wnet wrong'))
- }
  private http=inject(HttpClient)
   constructor() { }
+  log=true
   checkServer(){
     return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'})
   }
   getData(){
-    return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json'}).pipe(retry(3),catchError(this.handelError))
+    return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json'})
 
   }
   sendData(data:any){
@@ -36,6 +26,9 @@ export class FetchDataService {
   }
   updateData(data:any){
     return this.http.put<Friends[]>('http://localhost:3003/friends',data)
+  }
+  unauthPart(){
+    return this.http.get('http://localhost:3003/friends/un',{observe:'body'})
   }
 }
 export interface Friends{

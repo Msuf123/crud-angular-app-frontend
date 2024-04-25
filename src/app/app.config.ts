@@ -1,12 +1,12 @@
-import { ApplicationConfig } from '@angular/core';
+import { ApplicationConfig, importProvidersFrom } from '@angular/core';
 import { provideRouter } from '@angular/router';
 
 import { routes } from './app.routes';
 import { CustormInterceptor } from './services/interseptor/interseptor.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpBackend, HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
 import { FetchDataService } from './services/fetch-data.service';
 
 export const appConfig: ApplicationConfig = {
   
-  providers: [provideRouter(routes),CustormInterceptor],
+  providers: [importProvidersFrom(HttpClientModule),provideRouter(routes),CustormInterceptor,FetchDataService,HttpClient],
 };
