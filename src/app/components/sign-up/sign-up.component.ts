@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvailableUsernameService } from '../../services/available-username/available-username.service';
+import maxLength from '../../services/password-checker/password-checker.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -15,7 +16,7 @@ export class SignUpComponent {
  emailError:{email:boolean,required:boolean}={email:false,required:false}
  signUpForm=this.formBuilder.group({
   userId:['',[Validators.required,Validators.email,this.asynValidator.validate.bind(this.asynValidator)]]
-  ,password:['']
+  ,password:['',[maxLength(8)]]
  })
  constructor(private asynValidator:AvailableUsernameService){
   this.signUpForm.valueChanges.subscribe(()=>{
