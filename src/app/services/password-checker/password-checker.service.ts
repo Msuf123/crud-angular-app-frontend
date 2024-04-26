@@ -4,7 +4,7 @@ import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
    
 
-export default function maxLength(maxLength:number):ValidatorFn{
+export default function minLength(maxLength:number):ValidatorFn{
      return (control:AbstractControl<any, any>):ValidationErrors | null=>{
            const valueOfInput:string=control.value
            if(valueOfInput.length<maxLength){
@@ -17,7 +17,12 @@ export default function maxLength(maxLength:number):ValidatorFn{
   }
 
   export  function specialCharacter(control:AbstractControl):ValidationErrors|null{
-    if(1<2){
+   const specialCharacters='@'
+   const arrayOfChars=[]
+   for(let i=0;i<control.value.length;i++){
+     arrayOfChars.push(control.value[i])
+   }
+    if(arrayOfChars.includes(specialCharacters)){
        return null
     }
     else{

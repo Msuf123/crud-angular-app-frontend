@@ -2,27 +2,33 @@ import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvailableUsernameService } from '../../services/available-username/available-username.service';
-import maxLength from '../../services/password-checker/password-checker.service';
+import minLength, { specialCharacter } from '../../services/password-checker/password-checker.service';
+import { ColorDirectiveDirective } from '../../directives/color-directive/color-directive.directive';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
-  imports: [ReactiveFormsModule,CommonModule],
+  imports: [ReactiveFormsModule,CommonModule,ColorDirectiveDirective],
   templateUrl: './sign-up.component.html',
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
  formBuilder=inject(FormBuilder)
- emailError:{email:boolean,required:boolean}={email:false,required:false}
+ passwordError:PasswordError<boolean>
+ emailError:EmailError<boolean>={email:false,required:false}
  signUpForm=this.formBuilder.group({
   userId:['',[Validators.required,Validators.email,this.asynValidator.validate.bind(this.asynValidator)]]
-  ,password:['',[maxLength(8)]]
+  ,password:['',[minLength(8),specialCharacter]]
  })
  constructor(private asynValidator:AvailableUsernameService){
+  this.passwordError={minLength:true,specialCharacter:true}
   this.signUpForm.valueChanges.subscribe(()=>{
-    console.log(this.signUpForm.get('userId')?.errors)
+    console.log(this.signUpForm.get('password')?.errors)
     this.emailError=this.signUpForm.get('userId')?.hasError('required')?{email:false,required:true}:{email:false,required:false}
     this.emailError=this.signUpForm.get('userId')?.hasError('email')?{email:true,required:false}:this.emailError
+    this.passwordError=this.signUpForm.get('password')?.hasError('length')?{...this.passwordError,minLength:true}:{...this.passwordError,minLength:false}
+    this.passwordError=this.signUpForm.get('password')?.hasError('correctPassword')?{...this.passwordError,specialCharacter:true}:{...this.passwordError,specialCharacter:false}
+    console.log(this.signUpForm.get('password')?.errors)
   })
  }
  
@@ -30,4 +36,13 @@ export class SignUpComponent {
   console.log(this.signUpForm.value)
  }
  
+}
+interface EmailError<G>{
+ email:G,
+ required:G
+}
+interface PasswordError<T>{
+  minLength:T,
+  specialCharacter:T,
+  
 }
