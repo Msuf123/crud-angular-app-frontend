@@ -16,3 +16,12 @@ export default function maxLength(maxLength:number):ValidatorFn{
      }
   }
 
+  export  function specialCharacter(control:AbstractControl):ValidationErrors|null{
+    if(1<2){
+       return null
+    }
+    else{
+     return {correctPassword:'donot have correct chars'}
+    }
+  }
+
