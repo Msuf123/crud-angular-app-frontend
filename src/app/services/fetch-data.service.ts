@@ -20,6 +20,9 @@ export class FetchDataService {
   checkServer(){
     return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
+  validateInput(body:{username:string}){
+    return this.http.post('http://localhost:3003/sign-up/verifyUserName',body,{observe:'body',responseType:'text'})
+  }
   getData(){
     return this.http.get<Friends[]>('http://localhost:3003/friends',{observe:'body',responseType:'json'})
 
