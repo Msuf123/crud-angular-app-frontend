@@ -16,6 +16,9 @@ export class SignUpComponent {
  formBuilder=inject(FormBuilder)
  passwordError:PasswordError<boolean>
  emailError:EmailError<boolean>={email:false,required:false}
+ emailTaken:boolean=false
+ loading:boolean=false
+ emailAvailabe=false
  signUpForm=this.formBuilder.group({
   userId:new FormControl('',{asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)]})
   ,password:['',[minLength(8),specialCharacter]]
@@ -24,7 +27,22 @@ export class SignUpComponent {
   this.passwordError={minLength:true,specialCharacter:true}
   this.signUpForm.valueChanges.subscribe(()=>{
     this.signUpForm.get('userId')?.statusChanges.subscribe((a)=>{
-      console.log(a)
+      
+     if(a==='INVALID'){
+      this.emailTaken=true
+      this.loading=false
+      this.emailAvailabe=false
+     }
+     else if(a==='PENDING'){
+      this.emailTaken=false
+      this.loading=true;
+      this.emailAvailabe=false
+     }
+     else{
+      this.emailTaken=false
+      this.loading=false
+      this.emailAvailabe=true
+     }
     })
     this.emailError=this.signUpForm.get('userId')?.hasError('required')?{email:false,required:true}:{email:false,required:false}
     this.emailError=this.signUpForm.get('userId')?.hasError('email')?{email:true,required:false}:this.emailError

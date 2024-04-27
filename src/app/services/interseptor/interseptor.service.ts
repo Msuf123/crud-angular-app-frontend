@@ -11,7 +11,7 @@ export class InterseptorService implements HttpInterceptor {
     const  newreq=req.clone({
       headers:new HttpHeaders({Authorization:'new rokwn'})
     }) 
-     console.log('I am first')
+    
     return next.handle(newreq)
   }
   constructor() { }

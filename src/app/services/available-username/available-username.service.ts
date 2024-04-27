@@ -13,7 +13,7 @@ export class AvailableUsernameService implements AsyncValidator {
   
      
     
-   return this.request.validateInput({username:control.value}).pipe(tap((a)=>console.log(a)),map((a)=>false?{valid:true}:null))
+   return this.request.validateInput({username:control.value}).pipe(map((a)=>a==='invalid'?{valid:true}:null))
      
       
   }
