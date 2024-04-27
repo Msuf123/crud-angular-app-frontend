@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, AsyncValidator, ValidationErrors } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable,map,of,pipe, tap } from 'rxjs';
 import { FetchDataService } from '../fetch-data.service';
 
 @Injectable({
@@ -9,12 +9,12 @@ import { FetchDataService } from '../fetch-data.service';
 export class AvailableUsernameService implements AsyncValidator {
 
   constructor(private request:FetchDataService) { }
-  validate(control: AbstractControl<any, any>): Promise<ValidationErrors | null> | Observable<ValidationErrors | null> {
-    const response=new Promise<ValidationErrors|null>((resolve,reject)=>{
-      console.log('hi I am sending reques tot server')
-      this.request.validateInput({username:control.value}).subscribe((a)=>console.log(a))
-      resolve(null)
-    })
-    return response
+  validate(control: AbstractControl<any, any>):Observable<ValidationErrors | null> {
+  
+     
+    
+   return this.request.validateInput({username:control.value}).pipe(tap((a)=>console.log(a)),map((a)=>false?{valid:true}:null))
+     
+      
   }
 }
