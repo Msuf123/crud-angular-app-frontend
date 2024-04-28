@@ -7,9 +7,11 @@
         <label *ngIf="emailAvailabe">Email Avalibale</label>
         <label *ngIf="loading">Loading</label>
         <label *ngIf="emailTaken">Already used</label>
-        <input id="password" placeholder="Enter password" formControlName="password">
+        
         <label><span appColorDirective [colorBooleanValues]="passwordError.minLength">Atleat 8 characters</span><br>
             <span appColorDirective [colorBooleanValues]="passwordError.specialCharacter">One Special Charater(#,&#64;,!,etc.)</span></label>
         <button>Sign-up</button>
     </form>
+    <input id="password" placeholder="Enter password" [(ngModel)]="templatePassword" (ngModelChange)="logerFunction()" #vard="ngModel" appTemplateDriven>
+    <span>{{vard.control.getError('valid')}}</span>
 </div>
