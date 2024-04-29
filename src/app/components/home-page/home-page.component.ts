@@ -22,7 +22,7 @@ export class HomePageComponent {
     console.log(typeof HttpClientModule)
     //this.request.unauthPart().subscribe((a)=>console.log(a,'ll'))
     this.store.friendList.subscribe((data)=>{console.log(data);this.currentFriends=data})
-    //this.request.checkServer().subscribe((response)=>console.log(response))
+    this.request.checkServer().subscribe((response)=>console.log(response))
     this.request.getData().subscribe((response)=>store.friendList.next(response))
   }
 }

@@ -10,9 +10,6 @@ export class AvailableUsernameService implements AsyncValidator {
 
   constructor(private request:FetchDataService) { }
   validate(control: AbstractControl<any, any>):Observable<ValidationErrors | null> {
-  
-     
-    
    return this.request.validateInput({username:control.value}).pipe(map((a)=>a==='invalid'?{valid:true}:null))
      
       
