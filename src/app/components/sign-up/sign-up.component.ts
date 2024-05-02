@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angu
 import { AvailableUsernameService } from '../../services/available-username/available-username.service';
 import minLength, { specialCharacter } from '../../services/password-checker/password-checker.service';
 import { ColorDirectiveDirective } from '../../directives/color-directive/color-directive.directive';
+import { FetchDataService } from '../../services/fetch-data.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -13,6 +14,7 @@ import { ColorDirectiveDirective } from '../../directives/color-directive/color-
   styleUrl: './sign-up.component.css'
 })
 export class SignUpComponent {
+  request=inject(FetchDataService)
  formBuilder=inject(FormBuilder)
  passwordError:PasswordError<boolean>
  emailError:EmailError<boolean>={email:false,required:false}
@@ -52,7 +54,7 @@ export class SignUpComponent {
  }
  
  formSubmitted(){
-  console.log(this.signUpForm.value)
+   this.request.createFriends(this.signUpForm.value).subscribe((a)=>console.log(a))
  }
  
 }

@@ -30,6 +30,9 @@ export class FetchDataService {
   sendData(data:any){
     return this.http.post<Friends[]>('http://localhost:3003/friends/add',data,{headers:{'Content-Type':"application/json"},responseType:'json'})
   }
+  createFriends(data:any){
+    return this.http.post('http://localhost:3003/sign-up/user',data,{headers:{'Content-Type':"application/json"},responseType:'text'})
+  }
   deleteData(url:string,id:string){
     let prams=new HttpParams().set('name',id)
     console.log(prams.get('name'))
