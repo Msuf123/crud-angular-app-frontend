@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, DoCheck, Inject, OnInit } from '@angular/core';
 import { FetchDataService, Friends } from '../../services/fetch-data.service';
 import { FriendsService } from '../../services/current-list-of-friends/friends.service';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -15,11 +15,13 @@ import { UpdateFriendComponent } from '../update-friend/update-friend.component'
   styleUrl: './home-page.component.css',
   providers:[FriendsService,HttpClient,FetchDataService,{provide:URL,useValue:'http://localhost:3000'}]
 })
-export class HomePageComponent {
+export class HomePageComponent implements OnInit {
   currentFriends:Friends[]=[]
-
+  ngOnInit(): void {
+    console.log('hello')
+  }
   constructor(private request:FetchDataService,@Inject(URL) private url:string,private store:FriendsService){
-    console.log(typeof HttpClientModule)
+    
     //this.request.unauthPart().subscribe((a)=>console.log(a,'ll'))
     this.store.friendList.subscribe((data)=>{console.log(data);this.currentFriends=data})
     this.request.checkServer().subscribe((response)=>console.log(response))
