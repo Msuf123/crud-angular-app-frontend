@@ -1,22 +1,10 @@
-import { Inject, inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
-import { Observable } from 'rxjs';
+import { Inject, Injectable, inject } from '@angular/core';
+import { CanActivate, CanActivateFn, Router } from '@angular/router';
+import { Observable, map } from 'rxjs';
 import { FetchDataService } from '../services/fetch-data.service';
 export const authGuardGuard: CanActivateFn = (route, state) => {
-  const a=inject(FetchDataService)
+  const request=inject(FetchDataService)
   const navigationService=inject(Router)
-  const result=new Promise<boolean>((resolve,reject)=>{
-    const response=a.checkServer().subscribe(a=>{
-      if(a==='auth'){
-        resolve(true)
-      }
-      else{
-        reject(false)
-        navigationService.navigate(['/login'])
-      }
-    })
-  })
-  
-
-  return result
+   return request.checkServer().pipe(map((a)=>a==='auth'?true:false))
+      
 };

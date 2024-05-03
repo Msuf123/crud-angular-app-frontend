@@ -13,4 +13,5 @@ export const routes: Routes = [
     {path:'register',component:RegisterUserComponent},
     {path:'**',component:PageNotFoundComponent}
 ];
-
+// http://localhost:4200/github/callback
+// Ov23ctlxK38f77XvveHD 
