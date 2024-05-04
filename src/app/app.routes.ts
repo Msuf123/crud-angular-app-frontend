@@ -5,13 +5,17 @@ import { SignUpComponent } from './components/sign-up/sign-up.component';
 import { LoginComponent } from './components/login/login.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { GithubCallbackComponent } from './components/github-callback/github-callback.component';
+import { LoadingComponent } from './components/loading/loading.component';
 const titlew:ResolveFn<string>=()=>Promise.resolve('new-toitle')
 export const routes: Routes = [
     {path:'',component:HomePageComponent,canActivate:[authGuardGuard]},
     {path:'login',component:LoginComponent},
     {path:'sign-up',component:SignUpComponent},
     {path:'register',component:RegisterUserComponent},
-    {path:'**',component:PageNotFoundComponent}
+    {path:'github/callback',component:GithubCallbackComponent},
+    {path:'**',component:PageNotFoundComponent},
+    
 ];
 // http://localhost:4200/github/callback
 // Ov23ctlxK38f77XvveHD 

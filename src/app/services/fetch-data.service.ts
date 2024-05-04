@@ -17,6 +17,9 @@ export class FetchDataService {
      }
      return 'Something went wrong'
   }
+  postGithubCode(){
+    return this.http.post('http://localhost:3003',{code:'556'},{observe:'body',responseType:'text'})
+  }
   checkServer(){
     return this.http.get('http://localhost:3003/',{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
