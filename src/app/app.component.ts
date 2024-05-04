@@ -6,28 +6,39 @@ import { CommonModule } from '@angular/common';
 import { URL } from './services/url-of-server/url-backend.service';
 import { authGuardGuard } from './auth-guard/auth-guard.guard';
 import { FriendsService } from './services/current-list-of-friends/friends.service';
+import { LoadingComponent } from './components/loading/loading.component';
+import { ErrorComponent } from './components/error/error.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet],
+  imports: [RouterOutlet,LoadingComponent,CommonModule,ErrorComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   providers:[]
   
 })
 export class AppComponent {
+  displayLoading=false
+  displayError=false
       constructor(private router:Router){
         this.router.events.subscribe((event:Event)=>{
           if(event instanceof NavigationStart){
-            console.log('Navigaation started',event)
+            this.displayLoading=true
+            this.displayError=false
+
+            console.log('Navigaation started')
+
           }
           else if(event instanceof NavigationEnd){
+             this.displayLoading=false
              console.log('Naviagtion end')
           }
           else if(event instanceof NavigationCancel){
-            console.log('Can no acc4ss')
+            this.displayLoading=false
+            console.log('Accessing the route has been cancel by user or programmatically')
           }
           else if(event instanceof NavigationError){
+            this.displayLoading=false
             console.log('Naviagtion completed')
           }
         })
