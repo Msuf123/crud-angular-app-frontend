@@ -11,6 +11,6 @@ import { Router } from '@angular/router';
 export class GithubCallbackComponent {
   constructor(private router:Router){}
   ngOnInit(){
-    console.log(this.router.url)
+    new URL(this.router.url,'http://localhost:4200').searchParams.get('code')
   }
 }
