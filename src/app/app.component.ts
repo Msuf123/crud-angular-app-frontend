@@ -25,21 +25,15 @@ export class AppComponent {
           if(event instanceof NavigationStart){
             this.displayLoading=true
             this.displayError=false
-
-            console.log('Navigaation started')
-
-          }
+             }
           else if(event instanceof NavigationEnd){
              this.displayLoading=false
-             console.log('Naviagtion end')
           }
           else if(event instanceof NavigationCancel){
             this.displayLoading=false
-            console.log('Accessing the route has been cancel by user or programmatically')
           }
           else if(event instanceof NavigationError){
             this.displayLoading=false
-            console.log('Naviagtion completed')
           }
         })
       }
