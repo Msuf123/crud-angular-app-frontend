@@ -10,3 +10,4 @@ export const appConfig: ApplicationConfig = {
   
   providers: [importProvidersFrom(HttpClientModule),provideRouter(routes),CustormInterceptor,FetchDataService,HttpClient],
 };
+ 

@@ -10,12 +10,12 @@ export class FetchDataService {
   constructor() { }
   errorHandler(errorObject:HttpErrorResponse){
      if(errorObject.status===0){
-      console.log(errorObject.message)
+      console.log(errorObject.message,'Ther error is on out side')
      }
      else{
-      console.log(errorObject.error)
+      console.log(errorObject.error,'The error is on server side opps',errorObject.status)
      }
-     return 'Something went wrong'
+    return errorObject.message
   }
   postGithubCode(){
     return this.http.post('http://localhost:3003',{code:'556'},{observe:'body',responseType:'text'})
@@ -46,6 +46,9 @@ export class FetchDataService {
   }
   unauthPart(){
     return this.http.get('http://localhost:3003/friends/un',{observe:'body'})
+  }
+  postMethod(url:string,data:any){
+    return this.http.post(url,data,{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
 }
 export interface Friends{

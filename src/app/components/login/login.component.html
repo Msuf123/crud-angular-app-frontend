@@ -1,8 +1,8 @@
 <div class="outerDiv">
     <h1>Login</h1>
-    <form>
-        <input placeholder="Enter Username">
-        <input placeholder="Enter password">
+    <form [formGroup]="groupOfForms" (ngSubmit)="fromSubmitted()">
+    <input formControlName="username" placeholder="Enter Username">
+        <input formControlName="password" placeholder="Enter password">
         <button>Login</button>
     </form>
     <div class="openIdConnect">
