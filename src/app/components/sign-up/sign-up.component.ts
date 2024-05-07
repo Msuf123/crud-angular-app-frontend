@@ -24,7 +24,7 @@ export class SignUpComponent {
  loading:boolean=false
  emailAvailabe=false
  signUpForm=this.formBuilder.group({
-  userId:new FormControl('',{validators:[Validators.email],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
+  userId:new FormControl('',{validators:[Validators.email,Validators.required],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
   ,password:['',[minLength(8),specialCharacter]]
  })
  constructor(private asynValidator:AvailableUsernameService){
@@ -34,7 +34,10 @@ export class SignUpComponent {
     this.signUpForm.get('userId')?.statusChanges.subscribe((a)=>{
       console.log(a)
      if(a==='INVALID'){
-      this.emailTaken=true
+
+      this.emailTaken=false
+      if(this.signUpForm.get('userId')?.hasError('alreadyThere')){
+      this.emailTaken=true}
       this.loading=false
       this.emailAvailabe=false
      }
