@@ -8,11 +8,8 @@ import { LoggingMoreService } from './logging-more/logging-more.service';
 })
 export class InterseptorService implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const  newreq=req.clone({
-      headers:new HttpHeaders({Authorization:'new rokwn'})
-    }) 
     
-    return next.handle(newreq)
+    return next.handle(req)
   }
   constructor() { }
 }

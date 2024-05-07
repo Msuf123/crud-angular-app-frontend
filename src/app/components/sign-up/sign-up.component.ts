@@ -6,6 +6,8 @@ import minLength, { specialCharacter } from '../../services/password-checker/pas
 import { ColorDirectiveDirective } from '../../directives/color-directive/color-directive.directive';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { URL } from '../../services/url-of-server/url-backend.service';
+import { tap } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sign-up',
@@ -27,7 +29,7 @@ export class SignUpComponent {
   userId:new FormControl('',{validators:[Validators.email,Validators.required],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
   ,password:['',[minLength(8),specialCharacter]]
  })
- constructor(private asynValidator:AvailableUsernameService){
+ constructor(private asynValidator:AvailableUsernameService,private router:Router){
 
   this.passwordError={minLength:true,specialCharacter:true}
   this.signUpForm.valueChanges.subscribe(()=>{
@@ -60,7 +62,12 @@ export class SignUpComponent {
  }
  
  formSubmitted(){
-   this.request.createFriends(this.signUpForm.value).subscribe((a)=>console.log(a))
+  const trueResponse=(token:string)=>{
+    console.log(token)
+    localStorage.setItem('my-token',token)
+    this.router.navigate(['/login'])
+  }
+   this.request.postMethod('http://localhost:3003/sign-up',this.signUpForm.value).pipe(tap((response)=>response==='Something bad happened; please try again later.'?null:trueResponse(response))).subscribe()
  }
  
 }
