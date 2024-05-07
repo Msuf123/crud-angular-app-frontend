@@ -15,7 +15,7 @@ export const routes: Routes = [
     {path:'sign-up',component:SignUpComponent},
     {path:'register',component:RegisterUserComponent},
     {path:'github/callback',component:GithubCallbackComponent},
-    {path:'error',component:ErrorComponent},
+   
     {path:'**',component:PageNotFoundComponent},
     
 ];

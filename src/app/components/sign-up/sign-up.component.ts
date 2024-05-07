@@ -8,6 +8,7 @@ import { FetchDataService } from '../../services/fetch-data.service';
 import { URL } from '../../services/url-of-server/url-backend.service';
 import { tap } from 'rxjs';
 import { Router } from '@angular/router';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
   selector: 'app-sign-up',
@@ -60,14 +61,12 @@ export class SignUpComponent {
     this.passwordError=this.signUpForm.get('password')?.hasError('correctPassword')?{...this.passwordError,specialCharacter:true}:{...this.passwordError,specialCharacter:false}
   })
  }
- 
+ showError=inject(ErrorService)
  formSubmitted(){
   const trueResponse=(token:string)=>{
-    console.log(token)
-    localStorage.setItem('my-token',token)
     this.router.navigate(['/login'])
   }
-   this.request.postMethod('http://localhost:3003/sign-up',this.signUpForm.value).pipe(tap((response)=>response==='Something bad happened; please try again later.'?null:trueResponse(response))).subscribe()
+   this.request.postMethod('http://localhost:3003/sign-up',this.signUpForm.value).pipe(tap((response)=>response==='Something bad happened; please try again later.'?this.showError.displayError():trueResponse(response))).subscribe()
  }
  
 }

@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
+import { ErrorService } from '../../services/error/error.service';
 
 @Component({
   selector: 'app-error',
@@ -8,7 +9,8 @@ import { Component } from '@angular/core';
   styleUrl: './error.component.css'
 })
 export class ErrorComponent {
+  toogleError=inject(ErrorService)
   crossClick(){
-    console.log('I am cliked')
+    this.toogleError.cutError()
   }
 }

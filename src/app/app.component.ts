@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, inject } from '@angular/core';
 import { RouterLink,Router,Event, RouterLinkActive, RouterOutlet, ResolveStart, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { FetchDataService, Friends } from './services/fetch-data.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
@@ -8,6 +8,7 @@ import { authGuardGuard } from './auth-guard/auth-guard.guard';
 import { FriendsService } from './services/current-list-of-friends/friends.service';
 import { LoadingComponent } from './components/loading/loading.component';
 import { ErrorComponent } from './components/error/error.component';
+import { ErrorService } from './services/error/error.service';
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -18,9 +19,13 @@ import { ErrorComponent } from './components/error/error.component';
   
 })
 export class AppComponent {
+  showError=inject(ErrorService)
   displayLoading=false
-  displayError=false
+  displayError=this.showError.show.value
       constructor(private router:Router){
+        this.showError.show.subscribe((a)=>{
+          this.displayError=a
+        })
         this.router.events.subscribe((event:Event)=>{
           if(event instanceof NavigationStart){
             this.displayLoading=true

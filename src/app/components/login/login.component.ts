@@ -1,8 +1,9 @@
-import { CSP_NONCE, Component } from '@angular/core';
+import { CSP_NONCE, Component, inject } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { map, of } from 'rxjs';
 import { FetchDataService } from '../../services/fetch-data.service';
+import { ErrorService } from '../../services/error/error.service';
 
 
 @Component({
@@ -12,7 +13,8 @@ import { FetchDataService } from '../../services/fetch-data.service';
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent { 
+  showError=inject(ErrorService)
   link:string
   googleLink:string
   groupOfForms=this.foms.group({
@@ -20,12 +22,21 @@ export class LoginComponent {
     password:['']
   })
   fromSubmitted(){
-    this.request.postMethod('http://localhost:3003/sign-up/verifyUserName',this.groupOfForms.value).subscribe(
-      
-    (a)=>{
+    console.log('Making request')
+    this.request.postMethod('http://localhost:3003/sign-up/verifyUserName',this.groupOfForms.value).subscribe((a)=>{
       console.log(a)
-      a==='invalid'?this.groupOfForms.setErrors({status:'Wrong Id password'}):console.log('Correct credintail')
+      if(a==='Something bad happened; please try again later.'){
+         this.showError.displayError()
+         return null
+      }
+      const settingToken=(token:string)=>{
+        localStorage.setItem('my-token',token)
+        this.router.navigate(['/'])
+      }
+      a==='invalid'?this.groupOfForms.setErrors({status:'Wrong Id password'}):settingToken(a)
+       return null
     })
+
   }
   constructor(private foms:FormBuilder,private request:FetchDataService,private router:Router){
     this.groupOfForms.statusChanges.subscribe((a)=>{
