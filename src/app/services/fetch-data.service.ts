@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Inject, Injectable, inject } from '@angular/core';
 import { flush } from '@angular/core/testing';
-import { catchError, elementAt, retry, throwError } from 'rxjs';
+import { Observable, catchError, elementAt, retry, tap, throwError } from 'rxjs';
 
 @Injectable({providedIn:'root'})
 
@@ -15,7 +15,7 @@ export class FetchDataService {
      else{
       console.log(errorObject.error,'The error is on server side opps',errorObject.status)
      }
-    return errorObject.message
+    return  new Observable<string>((sub) => sub.next('Something bad happened; please try again later.'));
   }
   postGithubCode(){
     return this.http.post('http://localhost:3003',{code:'556'},{observe:'body',responseType:'text'})
