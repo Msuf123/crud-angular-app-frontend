@@ -1,17 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, Inject, Injector, inject } from '@angular/core';
 import { FormBuilder, FormControl, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AvailableUsernameService } from '../../services/available-username/available-username.service';
 import minLength, { specialCharacter } from '../../services/password-checker/password-checker.service';
 import { ColorDirectiveDirective } from '../../directives/color-directive/color-directive.directive';
 import { FetchDataService } from '../../services/fetch-data.service';
+import { URL } from '../../services/url-of-server/url-backend.service';
 
 @Component({
   selector: 'app-sign-up',
   standalone: true,
   imports: [ReactiveFormsModule,CommonModule,ColorDirectiveDirective],
   templateUrl: './sign-up.component.html',
-  styleUrl: './sign-up.component.css'
+  styleUrl: './sign-up.component.css',
+  providers:[{provide:URL,useValue:'http://localhost:300'}]
 })
 export class SignUpComponent {
   request=inject(FetchDataService)
@@ -22,14 +24,15 @@ export class SignUpComponent {
  loading:boolean=false
  emailAvailabe=false
  signUpForm=this.formBuilder.group({
-  userId:new FormControl('',{asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
+  userId:new FormControl('',{validators:[Validators.email],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
   ,password:['',[minLength(8),specialCharacter]]
  })
  constructor(private asynValidator:AvailableUsernameService){
+
   this.passwordError={minLength:true,specialCharacter:true}
   this.signUpForm.valueChanges.subscribe(()=>{
     this.signUpForm.get('userId')?.statusChanges.subscribe((a)=>{
-      
+      console.log(a)
      if(a==='INVALID'){
       this.emailTaken=true
       this.loading=false
