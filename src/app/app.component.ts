@@ -1,4 +1,4 @@
-import { Component, Inject, inject } from '@angular/core';
+import { AfterViewChecked, Component, Inject, inject } from '@angular/core';
 import { RouterLink,Router,Event, RouterLinkActive, RouterOutlet, ResolveStart, NavigationStart, NavigationEnd, NavigationCancel, NavigationError } from '@angular/router';
 import { FetchDataService, Friends } from './services/fetch-data.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
@@ -18,13 +18,19 @@ import { ErrorService } from './services/error/error.service';
   providers:[]
   
 })
-export class AppComponent {
+export class AppComponent implements AfterViewChecked {
+  ngAfterViewChecked(): void {
+    console.log('Repinting')
+  }
   showError=inject(ErrorService)
   displayLoading=false
   displayError=this.showError.show.value
       constructor(private router:Router){
         this.showError.show.subscribe((a)=>{
+          console.log('sEttign vlaue of error')
+          console.log(a)
           this.displayError=a
+         
         })
         this.router.events.subscribe((event:Event)=>{
           if(event instanceof NavigationStart){
