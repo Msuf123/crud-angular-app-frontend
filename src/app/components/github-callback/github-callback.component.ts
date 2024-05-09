@@ -14,7 +14,10 @@ export class GithubCallbackComponent {
   ngOnInit(){
     const code=new URL(this.router.url,'http://localhost:4200').searchParams.get('code')
     this.request.postMethod('http://localhost:3003/sign-up/githubVerigyUrl',{code}).subscribe((a)=>{
-      console.log(a)
+      const redirectFail=()=>{
+
+      }
+      a==='Something bad happened; please try again later.'?redirectFail:this.router.navigate(['/'])
     })
   }
 }
