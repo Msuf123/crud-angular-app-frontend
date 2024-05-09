@@ -17,8 +17,9 @@ export class GithubCallbackComponent {
     this.request.postMethod('http://localhost:3003/sign-up/githubVerigyUrl',{code}).subscribe((a)=>{
      
       const redirectFail=()=>{
-        this.showError.displayError()
+       
         this.router.navigate(['/login'])
+        this.showError.displayError()
       }
       const successRedirect=()=>{
 

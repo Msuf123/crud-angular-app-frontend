@@ -18,17 +18,15 @@ import { ErrorService } from './services/error/error.service';
   providers:[]
   
 })
-export class AppComponent implements AfterViewChecked {
-  ngAfterViewChecked(): void {
-    console.log('Repinting')
-  }
+export class AppComponent{
+  
   showError=inject(ErrorService)
   displayLoading=false
-  displayError=this.showError.show.value
+  displayError:boolean
       constructor(private router:Router){
+        this.displayError=false
         this.showError.show.subscribe((a)=>{
-          console.log('sEttign vlaue of error')
-          console.log(a)
+         
           this.displayError=a
          
         })
