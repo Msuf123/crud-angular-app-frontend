@@ -33,11 +33,10 @@ export class FetchDataService {
   }
   deleteData(url:string,id:string){
     let prams=new HttpParams().set('name',id)
-    console.log(prams.get('name'))
-    return this.http.delete<Friends[]>(url,{params:prams})
+    return this.http.delete(url,{params:prams,observe:'body',responseType:'text'})
   }
   updateData(data:any){
-    return this.http.put<Friends[]>('http://localhost:3003/friends',data)
+    return this.http.put('http://localhost:3003/friends',data,{observe:'body',responseType:'text'})
   }
   unauthPart(){
     return this.http.get('http://localhost:3003/friends/un',{observe:'body'})

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { FetchDataService } from '../../services/fetch-data.service';
 import { FriendsService } from '../../services/current-list-of-friends/friends.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -13,13 +14,16 @@ import { FriendsService } from '../../services/current-list-of-friends/friends.s
   providers:[FetchDataService]
 })
 export class UpdateFriendComponent {
-  constructor(private formBuilder:FormBuilder,private request:FetchDataService,private store:FriendsService){}
+  constructor(private formBuilder:FormBuilder,private request:FetchDataService,private store:FriendsService,private nav:Router){}
   form=this.formBuilder.group({
     name:[''],
     place:['']
   })
   submitData(){
-    this.request.updateData(this.form.value).subscribe((response)=>this.store.friendList.next(response))
+    this.request.updateData(this.form.value).subscribe((response)=>{
+      response==='Something bad happened; please try again later.'?this.nav.navigate(['/login']):this.store.friendList.next(JSON.parse(response))
+   
+    })
     
   }
 }
