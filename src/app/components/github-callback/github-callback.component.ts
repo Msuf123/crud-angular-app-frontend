@@ -18,13 +18,16 @@ export class GithubCallbackComponent {
      
       const redirectFail=()=>{
        
-        this.router.navigate(['/login'])
-        this.showError.displayError()
+       this.router.navigate(['/login'])
+       this.showError.displayError()
+        
       }
-      const successRedirect=()=>{
-
+      const successRedirect=(token:string)=>{
+        localStorage.setItem('my-token',token)
+        console.log('Setting token',localStorage.getItem('my-token'))
+        this.router.navigate(['/'])
       }
-      a==='Something bad happened; please try again later.'?redirectFail():this.router.navigate(['/'])
+      a==='Something bad happened; please try again later.'?redirectFail():successRedirect(a)
     })
   }
 }

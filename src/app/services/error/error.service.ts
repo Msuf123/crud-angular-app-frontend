@@ -9,7 +9,6 @@ export class ErrorService {
   constructor() { }
   show=new BehaviorSubject<boolean>(false)
   displayError(){
-    console.log('Error displaying')
     this.show.next(true)
   }
   cutError(){
