@@ -27,15 +27,16 @@ export class SignUpComponent {
  loading:boolean=false
  emailAvailabe=false
  signUpForm=this.formBuilder.group({
-  userId:new FormControl('',{validators:[Validators.email,Validators.required],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)],updateOn:'change'})
+  userId:new FormControl('',{validators:[Validators.email,Validators.required],asyncValidators:[this.asynValidator.validate.bind(this.asynValidator)]})
   ,password:['',[minLength(8),specialCharacter]]
  })
  constructor(private asynValidator:AvailableUsernameService,private router:Router){
-
+  
   this.passwordError={minLength:true,specialCharacter:true}
   this.signUpForm.valueChanges.subscribe(()=>{
     this.signUpForm.get('userId')?.statusChanges.subscribe((a)=>{
       console.log(a)
+     
      if(a==='INVALID'){
 
       this.emailTaken=false

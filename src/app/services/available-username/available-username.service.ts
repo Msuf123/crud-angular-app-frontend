@@ -11,6 +11,7 @@ export class AvailableUsernameService implements AsyncValidator {
   
   constructor(private request:FetchDataService) {}
   validate(control: AbstractControl<any, any>):Observable<ValidationErrors | null> {
+
    return this.request.postMethod('http://localhost:3003/sign-up/checkUserExists',{username:control.value}).pipe(map((a)=>a==='invalid'?{alreadyThere:true}:null))
      
       

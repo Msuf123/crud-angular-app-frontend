@@ -11,6 +11,7 @@ export class FetchDataService {
   errorHandler(errorObject:HttpErrorResponse){
      if(errorObject.status===0){
       console.log(errorObject.message,'Ther error is on out side')
+      console.log(errorObject)
      }
      else{
       console.log(errorObject.error,'The error is on server side opps',errorObject.status)
@@ -18,9 +19,7 @@ export class FetchDataService {
      
     return  new Observable<string>((sub) => sub.next('Something bad happened; please try again later.'));
   }
-  postGithubCode(){
-    return this.http.post('http://localhost:3003',{code:'556'},{observe:'body',responseType:'text'})
-  }
+  
   getRequest(url:string){
     return this.http.get(url,{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
@@ -38,9 +37,7 @@ export class FetchDataService {
   updateData(data:any){
     return this.http.put('http://localhost:3003/friends',data,{observe:'body',responseType:'text'})
   }
-  unauthPart(){
-    return this.http.get('http://localhost:3003/friends/un',{observe:'body'})
-  }
+  
   postMethod(url:string,data:any){
     return this.http.post(url,data,{observe:'body',responseType:'text'}).pipe(catchError(this.errorHandler))
   }
