@@ -7,3 +7,4 @@ After you are done with the frontend for github refer to backend readme for the 
 You also need to update line no 48 in same file (login.components.ts) You need to enter your google client id by following setps:
 1.
 Note: in case of google make sure your redirect url matches
+My web app works in the following manner :
